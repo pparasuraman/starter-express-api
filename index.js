@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 app.get('/demo/:userId', (req, res) => {
-
+  userId = req.params.tagId
   // Find the user with the given user ID
   const user = userData.find((user) => user.id === userId);
 
