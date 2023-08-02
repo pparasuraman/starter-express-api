@@ -5,7 +5,7 @@ app.get('/demo/:userId', (req, res) => {
   const userId = req.params.userId
   // Find the user with the given user ID
   const user = userData.find((user) => {
-    user.id === userId
+    return user.id === userId
   });
 
   if (user) {
