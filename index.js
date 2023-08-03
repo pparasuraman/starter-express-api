@@ -1,11 +1,15 @@
 const express = require('express')
 const app = express()
 
-app.get('/demo/:userId', (req, res) => {
-  const userId = req.params.userId
+app.get('/demo/:type/:value', (req, res) => {
+  const type = req.params.type
+  const value = req.params.value
   // Find the user with the given user ID
   const user = userData.find((user) => {
-    return user.id === userId
+    if(type == "id")
+      return user.id === value
+    else if (type == "phone")
+      return "+"+user.TelephoneCountryCode+user.TelephoneNumber == value
   });
 
   if (user) {
