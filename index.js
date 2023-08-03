@@ -7,7 +7,7 @@ app.get('/demo/:type/:value', (req, res) => {
   // Find the user with the given user ID
   const user = userData.find((user) => {
     if(type == "id")
-      return user.id === value
+      return user.id == value
     else if (type == "phone")
       return user.PhoneNumber == value
   });
