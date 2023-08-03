@@ -9,7 +9,7 @@ app.get('/demo/:type/:value', (req, res) => {
     if(type == "id")
       return user.id === value
     else if (type == "phone")
-      return "+"+user.TelephoneCountryCode+user.TelephoneNumber == value
+      return user.PhoneNumber == value
   });
 
   if (user) {
@@ -69,6 +69,7 @@ const userData = [
    "Gender": "female",
    "EmailAddress": "SandraDGomes@cuvox.de",
    "TelephoneNumber": "8050854285",
+   "PhoneNumber" : "+918050854285",
    "MothersMaiden": "Nelson"
  },
  {
@@ -115,6 +116,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "ThomasMSmith@teleworm.us",
    "TelephoneNumber": "952-736-1456",
+   "PhoneNumber" : "+19527361456",
    "MothersMaiden": "Marshall"
  },
  {
@@ -161,6 +163,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "EnriquePAnaya@einrot.com",
    "TelephoneNumber": "540-362-3953",
+   "PhoneNumber" : "+15403623953",
    "MothersMaiden": "Cooke"
  },
  {
@@ -207,6 +210,7 @@ const userData = [
    "Gender": "female",
    "EmailAddress": "DanaCFlorez@gustr.com",
    "TelephoneNumber": "814-542-4540",
+   "PhoneNumber" : "+18145424540",
    "MothersMaiden": "Fletcher"
  },
  {
@@ -253,6 +257,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "DerrickBArchey@jourrapide.com",
    "TelephoneNumber": "858-357-2716",
+   "PhoneNumber" : "+18583572716",
    "MothersMaiden": "Villarreal"
  },
  {
@@ -299,6 +304,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "SamuelADailey@superrito.com",
    "TelephoneNumber": "360-393-7550",
+   "PhoneNumber" : "+13603937550",
    "MothersMaiden": "Sanborn"
  },
  {
@@ -345,6 +351,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "JohnnyDNapier@jourrapide.com",
    "TelephoneNumber": "781-670-8534",
+   "PhoneNumber" : "+17816708534",
    "MothersMaiden": "White"
  },
  {
@@ -391,6 +398,7 @@ const userData = [
    "Gender": "female",
    "EmailAddress": "CherylWAllen@rhyta.com",
    "TelephoneNumber": "407-277-4695",
+   "PhoneNumber" : "+14072774695",
    "MothersMaiden": "Burris"
  },
  {
@@ -437,6 +445,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "JefferyJHatchett@gustr.com",
    "TelephoneNumber": "252-519-9264",
+   "PhoneNumber" : "+12525199264",
    "MothersMaiden": "Felder"
  },
  {
@@ -483,6 +492,7 @@ const userData = [
    "Gender": "male",
    "EmailAddress": "ManualNRivera@einrot.com",
    "TelephoneNumber": "313-217-7285",
+   "PhoneNumber" : "+13132177285",
    "MothersMaiden": "Marin"
  }
 ]
