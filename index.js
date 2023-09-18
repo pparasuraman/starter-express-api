@@ -9,7 +9,7 @@ app.get('/demo/:type/:value', (req, res) => {
     if(type == "id")
       return user.id == value
     else if (type == "phone")
-      return user.PhoneNumber == value
+      return user.TelephoneNumber == value
   });
 
   if (user) {
