@@ -115,8 +115,8 @@ const userData = [
    "ZipCode": 55337,
    "Gender": "male",
    "EmailAddress": "ThomasMSmith@teleworm.us",
-   "TelephoneNumber": "952-736-1456",
-   "PhoneNumber" : "+19527361456",
+   "TelephoneNumber": "8277197460",
+   "PhoneNumber" : "+918277197460",
    "MothersMaiden": "Marshall"
  },
  {
