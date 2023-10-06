@@ -1,29 +1,41 @@
 const express = require('express')
 const app = express()
 
-app.get('/demo/latest-ticket/:phoneNumber', (req, res) => {
-  const { phoneNumber } = req.params;
+app.get('/demo/search/:assignee_phone', async (req, res) => {
+  const { assignee_phone: assigneePhone } = req.params;
 
-  // Find the latest modified ticket associated with the given phone number
-  let latestTicket = null;
-  let latestModifiedTime = 0;
+  if (!assigneePhone) {
+    return res.status(400).json({ error: 'Phone number (assignee_phone) URL parameter is required.' });
+  }
 
-  ticketData.forEach((ticket) => {
-    const updatedTime = Date.parse(ticket.updated_at);
-    if (ticket.assignee.phone === phoneNumber && updatedTime > latestModifiedTime) {
-      latestModifiedTime = updatedTime;
-      latestTicket = ticket;
+  try {
+    const record = await fetchSingleRecordByAssigneePhone(assigneePhone);
+
+    if (record) {
+      res.json(record);
+    } else {
+      res.status(404).json({ error: 'Ticket not found for the specified phone number.' });
     }
-  });
-
-  if (latestTicket) {
-    // Concatenate ticketNumber and status as a string and send it as the response
-    const responseString = `Ticket Number: ${latestTicket.id}, Status: ${latestTicket.status}`;
-    res.send(responseString);
-  } else {
-    res.status(404).send('No tickets found for the given phone number');
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+app.post('/demo/insert', async (req, res) => {
+  const newTicket = req.body;
+
+  try {
+    const insertedRecord = await insertTicket(newTicket);
+    res.status(201).json(insertedRecord); // Respond with the inserted record
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 app.get('/demo/:type/:value', (req, res) => {
   const type = req.params.type
@@ -50,6 +62,124 @@ app.all('/', (req, res) => {
     console.log("Just got a request!")
     res.send('Yo!')
 });
+
+
+const { Client } = require('pg');
+
+// Connection configuration
+const dbConfig = {
+  user: 'admin',
+  password: 'd2WVD0FZSuupUN0fhKXUyAVXoI7ulC',
+  host: 'us-east-1.f2f7e6b6-8daf-45e3-ba08-0adc3a371126.aws.ybdb.io',
+  port: 5432, // Replace with your PostgreSQL port if different
+  database: 'yugabyte',
+  ssl:true,
+  sslmode:verify-full,
+  sslrootcert:'./root.crt'
+};
+
+// Function to fetch a single record by assignee_phone
+async function fetchSingleRecordByAssigneePhone(assigneePhone) {
+  const client = new Client(dbConfig);
+  await client.connect();
+
+  try {
+    const query = {
+      text: `
+        SELECT *
+        FROM tickets
+        WHERE assignee_phone = $1
+        ORDER BY updated_at DESC
+        LIMIT 1
+      `,
+      values: [assigneePhone],
+    };
+
+    const result = await client.query(query);
+
+    // Return the first (and only) row from the result set
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  } finally {
+    client.end();
+  }
+}
+
+// Function to insert a new ticket
+async function insertTicket(ticketData) {
+  const client = new Client(dbConfig);
+  await client.connect();
+
+  try {
+    const query = {
+      text: `
+        INSERT INTO tickets (id, subject, description, status, priority, created_at, updated_at, submitter_name, submitter_email, submitter_phone, assignee_name, assignee_email, assignee_phone)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        RETURNING *;
+      `,
+      values: [
+        ticketData.id,
+        ticketData.subject,
+        ticketData.description,
+        ticketData.status,
+        ticketData.priority,
+        ticketData.created_at,
+        ticketData.updated_at,
+        ticketData.submitter_name,
+        ticketData.submitter_email,
+        ticketData.submitter_phone,
+        ticketData.assignee_name,
+        ticketData.assignee_email,
+        ticketData.assignee_phone,
+      ],
+    };
+
+    const result = await client.query(query);
+
+    // Return the newly inserted record
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  } finally {
+    client.end();
+  }
+}
+
+// Example usage:
+const assigneePhone = '+918050854285'; // Replace with the desired phone number
+
+// Fetch a record by assignee_phone
+fetchSingleRecordByAssigneePhone(assigneePhone)
+  .then((record) => {
+    console.log('Fetched record:', record);
+
+    // Insert a new ticket record
+    const newTicket = {
+      id: '78901',
+      subject: 'New Ticket Subject',
+      description: 'New ticket description goes here.',
+      status: 'Open',
+      priority: 'Medium',
+      created_at: '2023-10-05T08:30:00Z',
+      updated_at: '2023-10-05T08:30:00Z',
+      submitter_name: 'John Doe',
+      submitter_email: 'john.doe@example.com',
+      submitter_phone: '+918050854285',
+      assignee_name: 'Jane Smith',
+      assignee_email: 'jane.smith@example.com',
+      assignee_phone: '+918050854285',
+    };
+
+    return insertTicket(newTicket);
+  })
+  .then((insertedRecord) => {
+    console.log('Inserted record:', insertedRecord);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
 
 
 const ticketData = [
