@@ -73,6 +73,9 @@ const dbConfig = {
   port: 5433, // Replace with your PostgreSQL port if different
   database: 'yugabyte',
   ssl: true,
+  ssl: {
+    rejectUnauthorized: false
+  },
   sslmode: 'verify-full',
   sslrootcert: './root.crt'
 };
