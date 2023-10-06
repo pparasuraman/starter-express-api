@@ -1,4 +1,5 @@
 const express = require('express')
+const { Client } = require('pg');
 const app = express()
 
 app.get('/demo/search/:assignee_phone', async (req, res) => {
@@ -63,8 +64,6 @@ app.all('/', (req, res) => {
     res.send('Yo!')
 });
 
-
-const { Client } = require('pg');
 
 // Connection configuration
 const dbConfig = {
