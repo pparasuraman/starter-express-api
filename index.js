@@ -145,42 +145,6 @@ async function insertTicket(ticketData) {
   }
 }
 
-// Example usage:
-const assigneePhone = '+918050854285'; // Replace with the desired phone number
-
-// Fetch a record by assignee_phone
-fetchSingleRecordByAssigneePhone(assigneePhone)
-  .then((record) => {
-    console.log('Fetched record:', record);
-
-    // Insert a new ticket record
-    const newTicket = {
-      id: '78901',
-      subject: 'New Ticket Subject',
-      description: 'New ticket description goes here.',
-      status: 'Open',
-      priority: 'Medium',
-      created_at: '2023-10-05T08:30:00Z',
-      updated_at: '2023-10-05T08:30:00Z',
-      submitter_name: 'John Doe',
-      submitter_email: 'john.doe@example.com',
-      submitter_phone: '+918050854285',
-      assignee_name: 'Jane Smith',
-      assignee_email: 'jane.smith@example.com',
-      assignee_phone: '+918050854285',
-    };
-
-    return insertTicket(newTicket);
-  })
-  .then((insertedRecord) => {
-    console.log('Inserted record:', insertedRecord);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-
-
-
 const ticketData = [
   {
     "id": "12345",
