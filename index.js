@@ -19,10 +19,153 @@ app.get('/demo/:type/:value', (req, res) => {
   }
 });
 
+app.get('/demo/latest-ticket/:phoneNumber', (req, res) => {
+  const { phoneNumber } = req.params;
+
+  // Find the latest modified ticket associated with the given phone number
+  let latestTicket = null;
+  let latestModifiedTime = 0;
+
+  ticketData.forEach((ticket) => {
+    const updatedTime = Date.parse(ticket.updated_at);
+    if (ticket.assignee.phone === phoneNumber && updatedTime > latestModifiedTime) {
+      latestModifiedTime = updatedTime;
+      latestTicket = ticket;
+    }
+  });
+
+  if (latestTicket) {
+    // Concatenate ticketNumber and status as a string and send it as the response
+    const responseString = `Ticket Number: ${latestTicket.id}, Status: ${latestTicket.status}`;
+    res.send(responseString);
+  } else {
+    res.status(404).send('No tickets found for the given phone number');
+  }
+});
+
+
 app.all('/', (req, res) => {
     console.log("Just got a request!")
     res.send('Yo!')
 });
+
+
+const ticketData = [
+  {
+    "id": "12345",
+    "subject": "Insurance Products of Tata AIA",
+    "description": "Information request about insurance products offered by Tata AIA.",
+    "status": "Open",
+    "priority": "High",
+    "created_at": "2023-09-28T14:30:00Z",
+    "updated_at": "2023-09-28T14:30:00Z",
+    "submitter": {
+      "name": "Sandra Gomes",
+      "email": "SandraDGomes@cuvox.de",
+      "phone": "+918050854285"
+    },
+    "assignee": {
+      "name": "Sandra Gomes",
+      "email": "SandraDGomes@cuvox.de",
+      "phone": "+918050854285"
+    }
+  },
+  {
+    "id": "23456",
+    "subject": "Insurance Products of Tata AIA",
+    "description": "Information request about insurance products offered by Tata AIA.",
+    "status": "Open",
+    "priority": "Medium",
+    "created_at": "2023-09-29T10:15:00Z",
+    "updated_at": "2023-09-29T10:15:00Z",
+    "submitter": {
+      "name": "James Smith",
+      "email": "james.smith@example.com",
+      "phone": "+918277197460"
+    },
+    "assignee": {
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "phone": "+918277197460"
+    }
+  },
+  {
+    "id": "34567",
+    "subject": "Insurance Products of Tata AIA",
+    "description": "Information request about insurance products offered by Tata AIA.",
+    "status": "Open",
+    "priority": "Low",
+    "created_at": "2023-09-30T15:45:00Z",
+    "updated_at": "2023-09-30T15:45:00Z",
+    "submitter": {
+      "name": "Emily Davis",
+      "email": "emily.davis@example.com",
+      "phone": "+5555555555"
+    },
+    "assignee": {
+      "name": "Mark Wilson",
+      "email": "mark.wilson@example.com",
+      "phone": "+7777777777"
+    }
+  },
+  {
+    "id": "45678",
+    "subject": "Insurance Products of Tata AIA",
+    "description": "Information request about insurance products offered by Tata AIA.",
+    "status": "Closed",
+    "priority": "High",
+    "created_at": "2023-10-01T09:30:00Z",
+    "updated_at": "2023-10-02T14:20:00Z",
+    "submitter": {
+      "name": "Sarah Brown",
+      "email": "sarah.brown@example.com",
+      "phone": "+8888888888"
+    },
+    "assignee": {
+      "name": "David White",
+      "email": "david.white@example.com",
+      "phone": "+9999999999"
+    }
+  },
+  {
+    "id": "56789",
+    "subject": "Insurance Products of Tata AIA",
+    "description": "Information request about insurance products offered by Tata AIA.",
+    "status": "Closed",
+    "priority": "Medium",
+    "created_at": "2023-10-02T13:45:00Z",
+    "updated_at": "2023-10-03T10:10:00Z",
+    "submitter": {
+      "name": "Michael Johnson",
+      "email": "michael.johnson@example.com",
+      "phone": "+7777777777"
+    },
+    "assignee": {
+      "name": "Anna Lee",
+      "email": "anna.lee@example.com",
+      "phone": "+6666666666"
+    }
+  },
+  {
+    "id": "67890",
+    "subject": "Insurance Products of Tata AIA",
+    "description": "Information request about insurance products offered by Tata AIA.",
+    "status": "Closed",
+    "priority": "Low",
+    "created_at": "2023-10-03T16:20:00Z",
+    "updated_at": "2023-10-04T11:55:00Z",
+    "submitter": {
+      "name": "Chris Anderson",
+      "email": "chris.anderson@example.com",
+      "phone": "+5555555555"
+    },
+    "assignee": {
+      "name": "Laura Martinez",
+      "email": "laura.martinez@example.com",
+      "phone": "+4444444444"
+    }
+  }
+];
 
 const userData = [
  {
