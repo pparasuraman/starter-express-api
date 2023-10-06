@@ -99,11 +99,21 @@ async function fetchSingleRecordByAssigneePhone(assigneePhone) {
     // Return the first (and only) row from the result set
     return result.rows[0];
   } catch (error) {
+    console.error('Error executing SQL query:', error);
     throw error;
   } finally {
-    client.end();
+    await client.end();
   }
 }
+
+// Example usage
+fetchSingleRecordByAssigneePhone('123456789')
+  .then(record => {
+    console.log('Fetched Record:', record);
+  })
+  .catch(err => {
+    console.error('Error:', err);
+  });
 
 // Function to insert a new ticket
 async function insertTicket(ticketData) {
