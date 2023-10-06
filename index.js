@@ -1,24 +1,6 @@
 const express = require('express')
 const app = express()
 
-app.get('/demo/:type/:value', (req, res) => {
-  const type = req.params.type
-  const value = req.params.value
-  // Find the user with the given user ID
-  const user = userData.find((user) => {
-    if(type == "id")
-      return user.id == value
-    else if (type == "phone")
-      return user.PhoneNumber == value
-  });
-
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(404).json({ message: 'User not found' });
-  }
-});
-
 app.get('/demo/latest-ticket/:phoneNumber', (req, res) => {
   const { phoneNumber } = req.params;
 
@@ -42,6 +24,26 @@ app.get('/demo/latest-ticket/:phoneNumber', (req, res) => {
     res.status(404).send('No tickets found for the given phone number');
   }
 });
+
+app.get('/demo/:type/:value', (req, res) => {
+  const type = req.params.type
+  const value = req.params.value
+  // Find the user with the given user ID
+  const user = userData.find((user) => {
+    if(type == "id")
+      return user.id == value
+    else if (type == "phone")
+      return user.PhoneNumber == value
+  });
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }
+});
+
+
 
 
 app.all('/', (req, res) => {
