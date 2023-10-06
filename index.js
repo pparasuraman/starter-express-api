@@ -148,12 +148,12 @@ async function insertTicket(ticketData) {
                 ticketData.priority,
                 ticketData.created_at,
                 ticketData.updated_at,
-                ticketData.submitter_name,
-                ticketData.submitter_email,
-                ticketData.submitter_phone,
-                ticketData.assignee_name,
-                ticketData.assignee_email,
-                ticketData.assignee_phone,
+                ticketData.submitte.name,
+                ticketData.submitter.email,
+                ticketData.submitter.phone,
+                ticketData.assignee.name,
+                ticketData.assignee.email,
+                ticketData.assignee.phone,
             ],
         };
 
