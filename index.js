@@ -1,5 +1,4 @@
 var pg = require('pg');
-const async = require('async');
 const fs = require('fs');
 const { callbackify } = require('util');
 const { rows } = require('pg/lib/defaults');
