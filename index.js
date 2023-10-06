@@ -72,9 +72,9 @@ const dbConfig = {
   host: 'us-east-1.f2f7e6b6-8daf-45e3-ba08-0adc3a371126.aws.ybdb.io',
   port: 5432, // Replace with your PostgreSQL port if different
   database: 'yugabyte',
-  ssl:true,
-  sslmode:verify-full,
-  sslrootcert:'./root.crt'
+  ssl: true,
+  sslmode: 'verify-full',
+  sslrootcert: './root.crt'
 };
 
 // Function to fetch a single record by assignee_phone
