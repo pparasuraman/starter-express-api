@@ -70,7 +70,7 @@ const dbConfig = {
   user: 'admin',
   password: 'd2WVD0FZSuupUN0fhKXUyAVXoI7ulC',
   host: 'us-east-1.f2f7e6b6-8daf-45e3-ba08-0adc3a371126.aws.ybdb.io',
-  port: 5432, // Replace with your PostgreSQL port if different
+  port: 5433, // Replace with your PostgreSQL port if different
   database: 'yugabyte',
   ssl: true,
   sslmode: 'verify-full',
