@@ -223,7 +223,7 @@ const ticketData = [
         "assignee": {
             "name": "Mark Wilson",
             "email": "mark.wilson@example.com",
-            "phone": "+7777777777"
+            "phone": "+919840201093"
         }
     },
     {
@@ -237,7 +237,7 @@ const ticketData = [
         "submitter": {
             "name": "Sarah Brown",
             "email": "sarah.brown@example.com",
-            "phone": "+8888888888"
+            "phone": "+918075790719"
         },
         "assignee": {
             "name": "David White",
